@@ -197,7 +197,7 @@ jobs:
             pwd
             cd .circleci/ansible
             ls -al
-            ansible playbook -i inventory .txt configure-server.yml
+            ansible-playbook -i inventory .txt configure-server.yml
           no_output_timeout: 30m
       # Here's where you will add some code to rollback on failure
       - destroy-environment
