@@ -164,12 +164,13 @@ jobs:
             aws ec2 describe-instances \
             --query "Reservations[*].Instances[*].[PublicIpAddress]" \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-            --output text >> ~/project/.circleci/ansible/inventory.txt
-            cat ~/project/.circleci/ansible/inventory.txt
+            --output text >> .circleci/ansible/inventory.txt
+            cat .circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
+             
       - destroy-environment
         
 
@@ -182,7 +183,8 @@ jobs:
       - checkout
       # Add ssh keys with fingerprint
       - add_ssh_keys:
-           fingerprints: ["5f:7b:a7:9c:34:bc:f2:7f:5f:6b:c9:fc:51:a5:21:41"]
+         fingerprints: 
+            - "5f:7b:a7:9c:34:bc:f2:7f:5f:6b:c9:fc:51:a5:21:41"
       # attach workspace
       - attach_workspace:
           at: ~/
@@ -195,7 +197,7 @@ jobs:
           command: |
             pwd
             cd .circleci/ansible
-            cat inventory.txt
+            ls -al
             ansible-playbook -i inventory.txt configure-server.yml
           no_output_timeout: 30m
       # Here's where you will add some code to rollback on failure
