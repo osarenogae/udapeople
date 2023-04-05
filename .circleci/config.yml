@@ -164,12 +164,12 @@ jobs:
             aws ec2 describe-instances \
             --query "Reservations[*].Instances[*].[PublicIpAddress]" \
             --filters "Name=tag:Name, Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-            --output text >> ~/project/.circleci/ansible/inventory.txt
-            cat ~/project/.circleci/ansible/inventory.txt
+            --output text >> ~/project/.circleci/ansible/inventory.ini
+            cat ~/project/.circleci/ansible/inventory.ini
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/.circleci/ansible/inventory.txt
+            - project/.circleci/ansible/inventory.ini
              
       - destroy-environment
         
@@ -197,7 +197,7 @@ jobs:
             pwd
             cd .circleci/ansible
             ls -al
-            ansible-playbook -i inventory.txt configure-server.yml
+            ansible-playbook -i inventory.ini configure-server.yml
           no_output_timeout: 30m
       # Here's where you will add some code to rollback on failure
       - destroy-environment
