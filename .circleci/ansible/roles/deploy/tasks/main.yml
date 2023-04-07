@@ -1,19 +1,19 @@
 ---
 - name: "Update"
-    become: true
-    apt:
-      update_cache: yes
-      cache_valid_time: 86400
+  become: true
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
       
 - name: "Remove unneeded deps"
-    become: true
-    apt:
-      autoremove: yes
+  become: true
+  apt:
+    autoremove: yes
 
 - name: "upgrade packages"
-    become: true
-    apt: 
-      upgrade: yes
+  become: true
+  apt: 
+    upgrade: yes
 
 - name: "install dependencies [nodejs and npm]."
   become: true
